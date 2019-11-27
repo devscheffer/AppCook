@@ -1,0 +1,21 @@
+create table ingrediente(
+	id_ingrediente serial
+	,descricao varchar(90)
+	,unit varchar(2)
+	,preco double
+	,volume double
+);
+
+create table estoque(
+	id_estoque serial
+	,id_ingrediente int
+	,qtd_reserva double
+	,qtd_necessaria double
+);
+
+create table receita(
+	id_ingrediente int
+	,qtd_necessaria double
+	,receita varchar(80)
+	,cooking boolean default false
+);
