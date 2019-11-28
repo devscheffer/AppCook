@@ -1,3 +1,5 @@
+package view;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,12 +10,12 @@
  *
  * @author gerso
  */
-public class reg_ingrediente extends javax.swing.JPanel {
+public class cad_ingrediente extends javax.swing.JPanel {
 
     /**
      * Creates new form reg_receita
      */
-    public reg_ingrediente() {
+    public cad_ingrediente() {
         initComponents();
     }
 
