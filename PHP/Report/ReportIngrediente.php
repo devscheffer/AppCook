@@ -1,15 +1,6 @@
 <?php
 require("../conecta.inc.php");
 $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
-$resultado = mysqli_query(
-  $ok,
-  "
-  Select 
-    * 
-    from 
-      ingrediente
-  "
-);
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +18,8 @@ $resultado = mysqli_query(
   <div class="main">
     <?php include("../menu.php"); ?>
 
-  <table class=" table">
+    <table class=" table">
+
       <thead>
         <tr>
           <th colspan=11>Ingrediente</th>
@@ -41,13 +33,25 @@ $resultado = mysqli_query(
           <th>Deletar</th>
         </tr>
       </thead>
+
       <tbody>
+
         <?php
+        $resultado = mysqli_query(
+          $ok,
+          "
+          Select 
+            * 
+            from 
+              ingrediente
+          "
+        );
+
         while ($linha = mysqli_fetch_array($resultado)) {
-          $Cod = $linha["id_ingrediente"];
-          $Nome         = $linha["descricao"];
-          $Unit     = $linha["unit"];
-          $Reserva         = $linha["qtd_reserva"];
+          $Cod     = $linha["id_ingrediente"];
+          $Nome    = $linha["descricao"];
+          $Unit    = $linha["unit"];
+          $Reserva = $linha["qtd_reserva"];
 
           print("<tr>
           <td>$Cod</td>");
@@ -62,7 +66,7 @@ $resultado = mysqli_query(
         }
         ?>
       </tbody>
-      </table>
+    </table>
   </div>
 </body>
 
