@@ -1,0 +1,244 @@
+body {
+  margin: 0px;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+}
+
+.page {
+  width: 100%;
+  height: 100%;
+  background-image: url("Img/background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat-y;
+}
+
+.page img {
+  width: 100%;
+  height: 100%;
+  background-image: url("Img/background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.main {
+  width: 100%;
+  height: 100vh;
+}
+nav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+nav a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+nav a:hover,
+.dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.header object {
+  width: 100%;
+  position: fixed;
+
+}
+
+.form {
+  width: 300px;
+  margin-left: 20px;
+  margin: auto;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.form fieldset {
+  background-color: white;
+}
+
+.form legend {
+  background-color: white;
+}
+.form a {
+  float: right;
+  font-weight: 900;
+}
+
+.form form p {
+  margin: 0px;
+}
+
+.form label {
+  width: 90%;
+  padding: 10px;
+  display: inline-table;
+  text-align: left;
+  background-color: lawngreen;
+}
+
+
+.form input {
+  width: 75%;
+  float: left;
+  padding: 10px;
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+table {
+  width : 100%;
+  text-align : center;
+}
+
+table th {
+  padding-top : 12px;
+  padding-bottom : 12px;
+  background-color: rgb(36, 16, 214);
+  color : white;
+}
+
+table tr:nth-child(odd) {
+  background-color: rgb(142, 179, 172);
+}
+
+table tr:nth-child(even) {
+  background-color: white;
+}
+
+table tr:hover {
+  background-color: #d6890d;
+}
+
+table td,th {
+  border : 1px solid #ddd;
+  padding : 8px;
+}
+
+.tl {
+  text-align: left;
+}
+
+.tr {
+  text-align: right;
+}
+
+h3 {
+  text-align: center;
+}
+
+.insert {
+  width: 80%;
+  display: block;
+  padding: 15px;
+  text-align: center;
+  font-size: 50px;
+  margin: auto;
+  word-wrap: break-word;
+  border-style: double;
+  border-width: 10px;
+  border-color: blue;
+  position: relative;
+  top: 20px;
+  background-color: white;
+}
+
+span {
+  color: white;
+  background-color: green;
+  width: 100%;
+  display: inline-table;
+}
+
+.form .save {
+  display: block;
+  float: right;
+  width: 50%;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.form span {
+  background: #b10159;
+  width: 80%;
+  display: inline-block;
+  margin-left: 15px;
+  padding: 5px;
+}
+
+.formdel {
+  width: 50%;
+  text-align: center;
+  margin: auto;
+  padding: 20px;
+}
+
+.formdel span {
+  color: white;
+  background-color: green;
+  width: 100%;
+  display: inline-table;
+}
+
+.formdel fieldset {
+  background-color: white;
+}
+
+.formdel legend {
+  background-color: white;
+}

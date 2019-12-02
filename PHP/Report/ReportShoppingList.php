@@ -3,11 +3,10 @@ require("../conecta.inc.php");
 $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
 $resultado = mysqli_query(
   $ok,
-  "
-  Select 
-    * 
-    from 
-      ingrediente
+  " 
+    SELECT * 
+    FROM ingrediente 
+    WHERE (qtd_reserva - qtd_necessaria) < 0  
   "
 );
 ?>
@@ -30,13 +29,12 @@ $resultado = mysqli_query(
   <table class=" table">
       <thead>
         <tr>
-          <th colspan=11>Ingrediente</th>
+          <th colspan=11>Shopping List</th>
         </tr>
         <tr>
-          <th>Cod</th>
           <th>Nome</th>
           <th>Unit</th>
-          <th>Reserva</th>
+          <th>Quantidade</th>
           <th>Alterar</th>
           <th>Deletar</th>
         </tr>
@@ -44,21 +42,15 @@ $resultado = mysqli_query(
       <tbody>
         <?php
         while ($linha = mysqli_fetch_array($resultado)) {
-          $Cod = $linha["id_ingrediente"];
-          $Nome         = $linha["descricao"];
-          $Unit     = $linha["unit"];
-          $Reserva         = $linha["qtd_reserva"];
+          $Ingrediente = $linha["descricao"];
+          $qtd_compra         = $linha["qtd_reserva - qtd_necessaria"];
 
           print("<tr>
-          <td>$Cod</td>");
+          <td>$Ingrediente</td>");
           print("
-          <td class='tl'>$Nome </td>");
-          print("
-          <td class='tl'>$Unit </td>");
-          print("
-          <td class='tr'>$Reserva </td>");
-          print("<td><a href='../Change/ChangeIngrediente.php?cod=$Cod'>Alterar</a></td>");
-          print("<td><a href='../Delete/DeleteIngrediente.php?cod=$Cod'>Deletar</a></td></tr>");
+          <td class='tl'>$qtd_compra </td>");
+          print("<td><a href='../Change/ChangeC.php?cod=$Ingrediente'>Alterar</a></td>");
+          print("<td><a href='../Delete/DeleteC.php?cod=$Ingrediente'>Deletar</a></td></tr>");
         }
         ?>
       </tbody>

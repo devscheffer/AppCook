@@ -40,7 +40,7 @@
         </div>
       </li>
       <li>
-        <a href='../Report/ReportShopList.php'>Shopping list</a>
+        <a href='../Report/ReportShoppingList.php'>Shopping list</a>
       </li>
     </ul>
   </nav>
