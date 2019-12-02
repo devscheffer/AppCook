@@ -18,27 +18,23 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
   <div class="main">
     <?php include("../menu.php"); ?>
     <?php
-    $id_ingrediente = $_POST['Id_ingrediente'];
-    $desc_alter             = $_POST['Desc_alter'];
-    $unit_alter      = $_POST['unit_alter'];
-    $reserva_alter = $_POST['Reserva_alter'];
-
-
+    $Id            = $_POST['id_ing'];
+    $Nome_alter    = $_POST['Nome_alter'];
+    $Unit_alter    = $_POST['Unit_alter'];
+    $Reserva_alter = $_POST['Reserva_alter'];
 
     print("<div class='insert'>Alteração de ingrediente realizada:<p>");
     mysqli_query(
       $ok,
-      "update 
-          ingrediente 
+      "update ingrediente 
           set 
-            descricao = '$desc_alter'
-            ,unit         = '$unit_alter'
-            ,qtd_reserva     = '$reserva_alter'
-          where 
-            id_ingrediente = '$id_ingrediente'
+              NOME    = '$Nome_alter'
+            , UNIT    = '$Unit_alter'
+            , RESERVA = '$Reserva_alter'
+          where ID_INGREDIENTE = '$Id'
         "
     ) or die("Não é possível alterar dados do ingrediente!");
-    print("Dados de ingrediente <br><span>$desc_alter</span><br> alterados com sucesso!<br> <a href='../Main/Index.php'>Voltar</a></div>");
+    print("Dados de ingrediente <br><span>$Nome_alter</span><br> alterados com sucesso!<br> <a href='../Main/Index.php'>Voltar</a></div>");
     ?>
   </div>
 

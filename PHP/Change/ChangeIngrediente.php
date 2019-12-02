@@ -1,12 +1,11 @@
 <?php
-$Cod = $_GET['cod'];
 require("../conecta.inc.php");
 $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
+$Id = $_GET['Id'];
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,47 +24,61 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
         <?php
         $result = mysqli_query(
           $ok,
-          "Select 
-            * 
-            from 
-              Ingrediente
-            where
-              id_ingrediente ='$Cod'
-            "
+          "Select * 
+            from Ingrediente
+            where ID_INGREDIENTE ='$Id'
+          "
         ) or die("Não é possível retornar dados do Ingrediente!");
 
-        $linha         = mysqli_fetch_array($result);
-        $id_ingrediente = $linha["id_ingrediente"];
-        $descricao = $linha["descricao"];
-        $unit         = $linha["unit"];
-        $qtd_reserva     = $linha["qtd_reserva"];
+        $linha   = mysqli_fetch_array($result);
+        $Nome    = $linha["NOME"];
+        $Unit    = $linha["UNIT"];
+        $Reserva = $linha["RESERVA"];
 
 
-        print("<h3>Ingrediente <br><span>$descricao</span> </h3><p>");
+        print("<h3>Ingrediente <br><span>$Nome</span> </h3><p>");
         ?>
         <a href='../Main/Index.php'>Cancelar e voltar</a>
         <br>
 
         <form action="CChangeIngrediente.php" method="post">
           
-          <label for="Id_ingrediente">Codigo:</label>
-          <?php print("<br><span>$id_ingrediente</span> ") ?>
-          <input type="hidden" name="Id_ingrediente" value="<?php print($id_ingrediente) ?>" id="Id_ingrediente ">
+          <label for="id_ing">Id:</label>
+          <?php print("<br><span>$Id</span> ") ?>
+          <input type="hidden" name="id_ing" value="<?php print($Id) ?>" id="id_ing ">
           <br>
 
-          <label for="Desc_alter">Ingrediente:</label>
-          <?php print("<br><span>$descricao</span> ") ?>
-          <input type="text" name="Desc_alter" value="<?php print($descricao) ?>" id="Desc_alter ">
+          <label for="Nome_alter">Ingrediente:</label>
+          <?php print("<br><span>$Nome</span> ") ?>
+          <input type="text" name="Nome_alter" value="<?php print($Nome) ?>" id="Nome_alter ">
           <br>
 
-          <label for="unit_alter">unit:</label>
-          <?php print("<br><span>$unit</span> ") ?>
-          <input type="text" name="unit_alter" value="<?php print($unit) ?>" id="unit_alter">
+
+        
+
+          <label for="Unit_alter">Unit:</label>
+          <?php print("<br><span>$Unit</span> ") ?>
+          <input type="text" list="ListUnit_alter" autocomplete="off" id="Unit_alter" name="Unit_alter" value="<?php print($Unit) ?>">
+          <datalist id="ListUnit_alter">
+          <?php
+          $resultado = mysqli_query(
+            $ok,
+            "select unit
+              from ingrediente
+              group by unit
+            "
+          ) or die("Nao e possivel consultar banco.");
+          while ($row = mysqli_fetch_array($resultado)) {
+            $Unit1 = $row["unit"];
+            print("<option value='$Unit1'>$Unit1</option>");
+          }
+          ?>
+          </datalist>
           <br>
 
-          <label for=" Reserva_alter">Reserva:</label>
-          <?php print("<br><span> $qtd_reserva</span> ") ?>
-          <input type="number" name="Reserva_alter" value="<?php print($qtd_reserva) ?>" id="Reserva_alter">
+          <label for="Reserva_alter">Reserva:</label>
+          <?php print("<br><span> $Reserva</span> ") ?>
+          <input type="number" name="Reserva_alter" value="<?php print($Reserva) ?>" id="Reserva_alter">
           <br>
 
           <input type="submit" value="Alterar Dados" class="save">

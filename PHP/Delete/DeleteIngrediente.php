@@ -1,7 +1,7 @@
 <?php
-$cod = $_GET['cod'];
 require("../conecta.inc.php");
 $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
+$Id = $_GET['Id'];
 ?>
 
 <html>
@@ -21,24 +21,20 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
         <?php
         $result = mysqli_query(
           $ok,
-          "select 
-              * 
-              from 
-                ingrediente 
-              where 
-                id_ingrediente ='$cod'
+          "select * 
+              from ingrediente 
+              where id_ingrediente ='$Id'
             "
-        ) or die("Não é possível retornar dados do amigo!");
+        ) or die("Não é possível retornar dados do ingrediente!");
         $linha         = mysqli_fetch_array($result);
-        $id_ingrediente = $linha["id_ingrediente"];
-        $NomeDesc         = $linha["descricao"];
+        $Nome        = $linha["NOME"];
 
 
-        print("<h3>Deletando ingrediente <br><span>$NomeDesc</span></h3><f>");
+        print("<h3>Deletando ingrediente <br><span>$Nome</span></h3><f>");
         ?>
         <a href='../Main/Index.php'>Cancelar e voltar</a>
         <form action="CDeleteIngrediente.php" method="get">
-          <input type="hidden" name="cod_del" value="<?php print($id_ingrediente) ?>">
+          <input type="hidden" name="cod_del" value="<?php print($Id) ?>">
           <br>
           <input type="submit" value="Deletar Dados" class="save">
         </form>
