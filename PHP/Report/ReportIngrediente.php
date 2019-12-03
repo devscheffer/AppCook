@@ -22,7 +22,7 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
 
       <thead>
         <tr>
-          <th colspan=11>Ingrediente</th>
+          <th colspan=20>Ingrediente</th>
         </tr>
         <tr>
           <th>ID</th>
@@ -41,11 +41,12 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
           "
           Select * 
           from ingrediente
+          order by nome
           "
         );
 
         while ($linha = mysqli_fetch_array($resultado)) {
-          $Id     = $linha["ID_INGREDIENTE"];
+          $Id      = $linha["ID_INGREDIENTE"];
           $Nome    = $linha["NOME"];
           $Unit    = $linha["UNIT"];
           $Reserva = $linha["RESERVA"];

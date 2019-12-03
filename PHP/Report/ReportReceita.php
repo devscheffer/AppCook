@@ -42,8 +42,8 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
 
           print("<tr>
           <td>$Nome</td>");
-          print("<td><a href='../Change/ChangeC.php?Nome=$Nome'>Alterar</a></td>");
-          print("<td><a href='../Delete/DeleteC.php?Nome=$Nome'>Deletar</a></td></tr>");
+          print("<td><a href='../Change/ChangeReceita.php?Nome=$Nome'>Alterar</a></td>");
+          print("<td><a href='../Delete/DeleteReceita.php?Nome=$Nome'>Deletar</a></td></tr>");
         }
         ?>
       </tbody>
