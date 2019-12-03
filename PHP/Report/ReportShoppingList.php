@@ -1,14 +1,6 @@
 <?php
 require("../conecta.inc.php");
 $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
-$resultado = mysqli_query(
-  $ok,
-  " 
-    SELECT * 
-    FROM ingrediente 
-    WHERE (qtd_reserva - qtd_necessaria) < 0  
-  "
-);
 ?>
 
 <!DOCTYPE html>
@@ -33,24 +25,41 @@ $resultado = mysqli_query(
         </tr>
         <tr>
           <th>Nome</th>
-          <th>Unit</th>
           <th>Quantidade</th>
-          <th>Alterar</th>
-          <th>Deletar</th>
+          <th>Unit</th>
         </tr>
       </thead>
       <tbody>
         <?php
-        while ($linha = mysqli_fetch_array($resultado)) {
-          $Ingrediente = $linha["descricao"];
-          $qtd_compra         = $linha["qtd_reserva - qtd_necessaria"];
+        $result = mysqli_query(
+          $ok,
+          " 
+          SELECT    
+            ingrediente.nome as nome
+            ,sum(receita.requerido)
+            ,ingrediente.reserva
+            ,ingrediente.reserva - sum(receita.requerido) as sl
+            ,ingrediente.UNIT as unit
+          from receita
+          join ingrediente
+          on receita.ID_INGREDIENTE = ingrediente.ID_INGREDIENTE 
+          where 
+          receita.NOME in (SELECT nome from shopping_list)
+          GROUP by ingrediente.nome
+          having sl < 0  
+          "
+        );
+        while ($linha = mysqli_fetch_array($result)) {
+          $Ingrediente = $linha["nome"];
+          $qtd_compra  = $linha["sl"];
+          $unit        = $linha["unit"];
 
           print("<tr>
           <td>$Ingrediente</td>");
           print("
           <td class='tl'>$qtd_compra </td>");
-          print("<td><a href='../Change/ChangeC.php?cod=$Ingrediente'>Alterar</a></td>");
-          print("<td><a href='../Delete/DeleteC.php?cod=$Ingrediente'>Deletar</a></td></tr>");
+          print("
+          <td class='tl'>$unit </td>");
         }
         ?>
       </tbody>

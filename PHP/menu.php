@@ -25,6 +25,7 @@
           <div class="dropdown-content">
             <a href="../Form/FormIngrediente.php">Ingrediente</a>
             <a href="../Form/FormReceita.php">Receita</a>
+            <a href="../Form/FormShoppingList.php">Shopping list</a>
           </div>
           </div>
       </li>
@@ -36,11 +37,9 @@
           <div class="dropdown-content">
             <a href="../Report/ReportIngrediente.php">Ingrediente</a>
             <a href="../Report/ReportReceita.php">Receita</a>
+            <a href='../Report/ReportShoppingList.php'>Shopping list</a>
           </div>
         </div>
-      </li>
-      <li>
-        <a href='../Report/ReportShoppingList.php'>Shopping list</a>
       </li>
     </ul>
   </nav>
