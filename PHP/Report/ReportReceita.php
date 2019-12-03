@@ -1,20 +1,10 @@
 <?php
 require("../conecta.inc.php");
 $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
-$resultado = mysqli_query(
-  $ok,
-  "select 
-    receita
-    ,cooking
-  from receita
-  group by receita
-  "
-);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,23 +24,26 @@ $resultado = mysqli_query(
         </tr>
         <tr>
           <th>Nome</th>
-          <th>Cooking</th>
           <th>Alterar</th>
           <th>Deletar</th>
         </tr>
       </thead>
       <tbody>
         <?php
-        while ($linha = mysqli_fetch_array($resultado)) {
-          $Receita = $linha["receita"];
-          $Cooking         = $linha["cooking"];
+        $result = mysqli_query(
+          $ok,
+          "select NOME
+          from receita
+          group by NOME
+          "
+        );
+        while ($linha = mysqli_fetch_array($result)) {
+          $Nome = $linha["NOME"];
 
           print("<tr>
-          <td>$Receita</td>");
-          print("
-          <td class='tl'>$Cooking </td>");
-          print("<td><a href='../Change/ChangeC.php?cod=$Receita'>Alterar</a></td>");
-          print("<td><a href='../Delete/DeleteC.php?cod=$Receita'>Deletar</a></td></tr>");
+          <td>$Nome</td>");
+          print("<td><a href='../Change/ChangeC.php?Nome=$Nome'>Alterar</a></td>");
+          print("<td><a href='../Delete/DeleteC.php?Nome=$Nome'>Deletar</a></td></tr>");
         }
         ?>
       </tbody>

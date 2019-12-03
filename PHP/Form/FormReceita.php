@@ -10,7 +10,7 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Cadastro de Ingrediente</title>
+  <title>Cadastro</title>
   <link rel="stylesheet" href="../style.css">
 </head>
 
@@ -22,39 +22,43 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
       <a href='../Main/Index.php'>Cancelar</a>
       <legend>Cadastro de Receita</legend>
       <form method="post" action="">
+
         <label for="NameR">Nome da Receita: </label>
         <input type="text" name="NameR" id="NameR">
         <br>
+
         <label for="ing">Ingrediente: </label>
         <input type="text" list="Listing" autocomplete="off" id="ing" name="ing">
         <datalist id="Listing">
           <?php
-          $resultado1 = mysqli_query(
+          $result = mysqli_query(
             $ok,
             "select distinct 
-              descricao
-              ,unit
+              NOME
+              ,UNIT
               from ingrediente
             "
           ) or die("Nao e possivel consultar banco.");
-          while ($row = mysqli_fetch_array($resultado1)) {
-            $ingrediente = $row["descricao"];
-            $unit = $row["unit"];
-            print("<option value='$ingrediente'>$ingrediente ($unit)</option>");
+          while ($row = mysqli_fetch_array($result)) {
+            $Nome = $row["NOME"];
+            $Unit = $row["UNIT"];
+            print("<option value='$Nome'>$Nome ($Unit)</option>");
           }
           ?>
         </datalist>
         <br>
+
         <label for="qtd">Quantidade</label>
         <input type="number" name="qtd" id="qtd">
         <br>
+
         <input type="submit" value="adicionar" class="save">
       </form>
     </fieldset>    
     
     <div class="main">
 
-  <table class=" table">
+  <table class="table">
       <thead>
         <tr>
           <th colspan=11>Receita</th>
@@ -70,24 +74,24 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
       <tbody>
       <?php
       if(isset($_POST["submit"])) {
-    $NameR     = $_POST['NameR'];
-    $resultado = mysqli_query(
-      $ok,
-      "select 
-      receita.qtd_necessaria
-      ,receita.receita
-      ,descricao
-      from receita
-      where receita = '$NameR'
-      join ingrediente
-      on ingrediente.id_ingrediente = receita.id_ingrediente
-      "
-    );
+        $NameR     = $_POST['NameR'];
+        $result = mysqli_query(
+          $ok,
+          "select 
+            receita.NOME
+            ,ingrediente.NOME
+            ,REQUERIDO
+          from receita
+          where receita = '$NameR'
+          join ingrediente
+          on ingrediente.id_ingrediente = receita.id_ingrediente
+          "
+        );
 
-        while ($linha = mysqli_fetch_array($resultado)) {
-          $qtd = $linha["qtd_necessaria"];
-          $receita         = $linha["receita"];
-          $ingrediente         = $linha["descricao"];
+        while ($linha = mysqli_fetch_array($result)) {
+          $qtd         = $linha["REQUERIDO"];
+          $receita     = $linha["receita.NOME"];
+          $ingrediente = $linha["ingrediente.NOME"];
 
           print("<tr>
           <td>$receita</td>");
@@ -95,8 +99,7 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
           <td class='tl'>$qtd </td>");
           print("
           <td class='tl'>$ingrediente </td>");
-          print("<td><a href='../Change/ChangeC.php?cod=$receita'>Alterar</a></td>");
-          print("<td><a href='../Delete/DeleteC.php?cod=$receita'>Deletar</a></td></tr>");
+          print("<td><a href='../Delete/DeleteChange.php?Nome=$receita',Ing = $ingrediente>Deletar</a></td></tr>");
         }
       }
         ?>
