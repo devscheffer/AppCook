@@ -21,44 +21,83 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
     <fieldset>
       <a href='../Main/Index.php'>Cancelar</a>
       <legend>Cadastro de Receita</legend>
-      <form method="post" action="">
+      <form action="" method="post">
 
         <label for="NameR">Nome da Receita: </label>
-        <input type="text" name="NameR" id="NameR">
-        <br>
-
-        <label for="ing">Ingrediente: </label>
-        <input type="text" list="Listing" autocomplete="off" id="ing" name="ing">
-        <datalist id="Listing">
+        <input type="text" list="ListNameR" autocomplete="off" id="NameR" name="NameR">
+        <datalist id="ListNameR">
           <?php
-          $result = mysqli_query(
+          $resultado = mysqli_query(
             $ok,
-            "select distinct 
-              NOME
-              ,UNIT
-              from ingrediente
+            "select distinct nome
+              from receita
             "
           ) or die("Nao e possivel consultar banco.");
-          while ($row = mysqli_fetch_array($result)) {
-            $Nome = $row["NOME"];
-            $Unit = $row["UNIT"];
-            print("<option value='$Nome'>$Nome ($Unit)</option>");
+          while ($row = mysqli_fetch_array($resultado)) {
+            $Nome = $row["nome"];
+            print("<option value='$Nome'>$Nome</option>");
           }
           ?>
         </datalist>
         <br>
 
-        <label for="qtd">Quantidade</label>
-        <input type="number" name="qtd" id="qtd">
+        <label for="Ing">Ingrediente: </label>
+        <input type="text" list="ListIng" autocomplete="off" id="Ing" name="Ing">
+        <datalist id="ListIng">
+          <?php
+          $resultado = mysqli_query(
+            $ok,
+            "select nome,id_ingrediente
+              from ingrediente
+            "
+          ) or die("Nao e possivel consultar banco.");
+          while ($row = mysqli_fetch_array($resultado)) {
+            $Nome = $row["nome"];
+            $Id = $row["id_ingrediente"];
+            print("<option value='$Id'>$Nome</option>");
+          }
+          ?>
+        </datalist>
         <br>
 
-        <input type="submit" value="adicionar" class="save">
-      </form>
-    </fieldset>    
-    
-    <div class="main">
+        <label for="Requerido">Requerido</label>
+        <input type="number" name="Requerido" id="Requerido">
+        <br>
 
-  <table class="table">
+        <input type="submit" value="Salvar" class="save">
+      </form>
+    </fieldset>
+
+    <?php
+      if(isset($_POST)){
+        $NameR     = $_POST['NameR'];
+        $NameI     = $_POST['Ing'];
+        $Requerido = $_POST['Requerido'];
+    if (
+      $NameR == ""
+      or $NameI == ""
+      or $Requerido   == ""
+    )
+      print("Faltou preencher algum campo...");
+    else {		
+      mysqli_query(
+        $ok,
+        "insert into 
+          receita (
+            NOME 
+            ,ID_INGREDIENTE
+            ,REQUERIDO
+          ) 
+          values (
+            '$NameR'
+            ,'$NameI'
+            ,'$Requerido'
+        )"
+      ) or die("Não é possível inserir a receita!");
+    }
+  }
+    ?>
+  <table class=" table">
       <thead>
         <tr>
           <th colspan=11>Receita</th>
@@ -67,47 +106,44 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
           <th>Receita</th>
           <th>Quantidade</th>
           <th>Ingrediente</th>
-          <th>Alterar</th>
           <th>Deletar</th>
         </tr>
       </thead>
       <tbody>
-      <?php
-      if(isset($_POST["submit"])) {
-        $NameR     = $_POST['NameR'];
+        <?php
+        if(isset($_POST)){
+        $NameR   = $_POST['NameR'];
         $result = mysqli_query(
           $ok,
           "select 
-            receita.NOME
-            ,ingrediente.NOME
-            ,REQUERIDO
+            receita.NOME as nomer
+            ,receita.REQUERIDO as req
+            ,ingrediente.NOME as nomei
+            ,id_receita
           from receita
-          where receita = '$NameR'
           join ingrediente
-          on ingrediente.id_ingrediente = receita.id_ingrediente
+          on receita.id_ingrediente = ingrediente.id_ingrediente
+          where receita.NOME = '$NameR'
           "
         );
-
         while ($linha = mysqli_fetch_array($result)) {
-          $qtd         = $linha["REQUERIDO"];
-          $receita     = $linha["receita.NOME"];
-          $ingrediente = $linha["ingrediente.NOME"];
+          $NomeR = $linha["nomer"];
+          $Req   = $linha["req"];
+          $NomeI = $linha["nomei"];
+          $Id = $linha["id_receita"];
 
-          print("<tr>
-          <td>$receita</td>");
           print("
-          <td class='tl'>$qtd </td>");
+          <td>$NomeR</td>");
           print("
-          <td class='tl'>$ingrediente </td>");
-          print("<td><a href='../Delete/DeleteChange.php?Nome=$receita',Ing = $ingrediente>Deletar</a></td></tr>");
+          <td>$Req</td>");
+          print("
+          <td>$NomeI</td>");
+          print("<td><a href='../Delete/DeleteChange.php?id=$Id'>Deletar</a></td></tr>");
         }
       }
         ?>
       </tbody>
       </table>
   </div>
-  </div>
-      }
 </body>
-
 </html>

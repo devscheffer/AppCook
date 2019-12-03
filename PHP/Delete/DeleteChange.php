@@ -1,8 +1,7 @@
 <?php
 require("../conecta.inc.php");
 $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
-$Nome = $_GET['Nome'];
-$Ingrediente = $_GET['Ing'];
+$Id = $_GET['id'];
 ?>
 
 <html>
@@ -23,25 +22,24 @@ $Ingrediente = $_GET['Ing'];
         $result = mysqli_query(
           $ok,
           "select 
-            receita.NOME
-            ,ingrediente.NOME
-            ,REQUERIDO
+            receita.NOME as nomer
+            ,receita.REQUERIDO as req
+            ,ingrediente.NOME as nomei
+            ,id_receita
           from receita
           join ingrediente
-          on ingrediente.id_ingrediente = receita.id_ingrediente
-          where 
-            receita.NOME ='$Nome'
-            , ingrediente.NOME = '$Ingrediente'
+          on receita.id_ingrediente = ingrediente.id_ingrediente
+          where id_receita = '$Id'
             "
         ) or die("Não é possível retornar dados do ingrediente!");
         $linha         = mysqli_fetch_array($result);
-        $NomeIng        = $linha["ingrediente.NOME"];
+        $NomeIng        = $linha["nomei"];
 
 
         print("<h3>Deletando ingrediente <br><span>$NomeIng</span></h3><f>");
         ?>
         <a href='../Main/Index.php'>Cancelar e voltar</a>
-        <form action="CDeleteIngrediente.php" method="get">
+        <form action="CDeleteChange.php" method="get">
           <input type="hidden" name="cod_del" value="<?php print($Id) ?>">
           <br>
           <input type="submit" value="Deletar Dados" class="save">
