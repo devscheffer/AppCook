@@ -20,7 +20,6 @@ include '..\Model\ClassReceita.php'
 	$Receita->setNameI($_POST['Ing']);
 	$Receita->setRequerido($_POST['Requerido']);
 
-
 	if (
 		$Receita->getNameR() == ""
 		or $Receita->getNameI() == ""

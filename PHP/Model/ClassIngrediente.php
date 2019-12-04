@@ -74,4 +74,27 @@ class Ingrediente {
         ) or die("Não é possível inserir o ingrediente!");
     }
 
+    public function ReadIngrediente($resultado){
+        while ($linha = mysqli_fetch_array($resultado)) {
+            $Ingrediente = new Ingrediente(
+              $linha["ID_INGREDIENTE"]
+              ,$linha["NOME"]
+              ,$linha["UNIT"]
+              ,$linha["RESERVA"]
+            );
+  
+            print("<tr>
+            <td>".$Ingrediente->getId()."</td>");
+            print("
+            <td>".$Ingrediente->getNome()."</td>");
+            print("
+            <td>".$Ingrediente->getUnit()."</td>");
+            print("
+            <td>".$Ingrediente->getReserva()."</td>");
+            print("<td><a href='../Change/ChangeIngrediente.php?Id=".$Ingrediente->getId()."'>Alterar</a></td>");
+            print("<td><a href='../Delete/DeleteIngrediente.php?Id=".$Ingrediente->getId()."'>Deletar</a></td></tr>");
+        }
+    }
+
 }
+

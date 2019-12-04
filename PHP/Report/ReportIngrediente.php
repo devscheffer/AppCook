@@ -1,6 +1,7 @@
 <?php
 require("../conecta.inc.php");
 $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
+include '..\Model\ClassIngrediente.php' 
 ?>
 
 <!DOCTYPE html>
@@ -36,32 +37,17 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
 
       <tbody>
         <?php
-        $resultado = mysqli_query(
-          $ok,
-          "
-          Select * 
-          from ingrediente
-          order by nome
-          "
-        );
-
-        while ($linha = mysqli_fetch_array($resultado)) {
-          $Id      = $linha["ID_INGREDIENTE"];
-          $Nome    = $linha["NOME"];
-          $Unit    = $linha["UNIT"];
-          $Reserva = $linha["RESERVA"];
-
-          print("<tr>
-          <td>$Id</td>");
-          print("
-          <td class='tl'>$Nome </td>");
-          print("
-          <td class='tl'>$Unit </td>");
-          print("
-          <td class='tr'>$Reserva </td>");
-          print("<td><a href='../Change/ChangeIngrediente.php?Id=$Id'>Alterar</a></td>");
-          print("<td><a href='../Delete/DeleteIngrediente.php?Id=$Id'>Deletar</a></td></tr>");
-        }
+        $resultado = 
+          mysqli_query(
+            $ok,
+            "
+            Select * 
+            from ingrediente
+            order by nome
+            "
+          );
+          $Ingrediente = new Ingrediente();
+          $Ingrediente->ReadIngrediente($resultado);
         ?>
       </tbody>
     </table>
