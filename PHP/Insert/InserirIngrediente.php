@@ -1,6 +1,7 @@
 <?php 
 require("../conecta.inc.php");
 $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
+include '..\Model\ClassIngrediente.php'
 ?>
 
 <html>
@@ -13,33 +14,22 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
 <body class="page">
 	<?php include("../menu.php"); ?>
 	<?php
-	$NameI   = $_POST['NameI'];
-	$Unit    = $_POST['Unit'];
-	$Reserva = $_POST['Reserva'];
 
+	$ingrediente = new Ingrediente();
+	$ingrediente->setNome($_POST['NameI']);
+	$ingrediente->setUnit($_POST['Unit']);
+	$ingrediente->setReserva($_POST['Reserva']);
+	
 	if (
-		$NameI == ""
-		or $Unit == ""
-		or $Reserva   == ""
+		$ingrediente->getNome() == ""
+		or $ingrediente->getUnit()  == ""
+		or $ingrediente->getReserva()    == ""
 	)
 		print("Faltou preencher algum campo...");
-	else {		
+	else {
 		print("<div class='insert'>Inserindo Ingrediente: ");
-		mysqli_query(
-			$ok,
-			"insert into 
-				ingrediente (
-					NOME 
-					,UNIT
-					,RESERVA
-				) 
-				values (
-					'$NameI'
-					,'$Unit'
-					,'$Reserva'
-			)"
-		) or die("Não é possível inserir o ingrediente!");
-		print("<span>$NameI</span> inserido com sucesso<br> <a href='..\Form\FormIngrediente.php'>Voltar</a></div>");
+		$ingrediente->CreateIngrediente($ingrediente);
+		print("<span>".$ingrediente->getNome()."</span> inserido com sucesso<br> <a href='..\Form\FormIngrediente.php'>Voltar</a></div>");
 	}
 	?>
 </body>

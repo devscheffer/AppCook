@@ -13,33 +13,23 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
 <body class="page">
 	<?php include("../menu.php"); ?>
 	<?php
-	$NameR   = $_POST['NameR'];
-	$NameI    = $_POST['Ing'];
-	$Requerido = $_POST['Requerido'];
+
+	$Receita = new Receita();
+	$Receita->setNameR($_POST['NameR']);
+	$Receita->setNameI($_POST['Ing']);
+	$Receita->setRequerido($_POST['Requerido']);
+
 
 	if (
-		$NameR == ""
-		or $NameI == ""
-		or $Requerido   == ""
+		$Receita->getNameR() == ""
+		or $Receita->getNameI() == ""
+		or $Receita->getRequerido()   == ""
 	)
 		print("Faltou preencher algum campo...");
 	else {		
 		print("<div class='insert'>Inserindo Ingrediente: ");
-		mysqli_query(
-			$ok,
-			"insert into 
-				receita (
-					NOME 
-					,ID_INGREDIENTE
-					,REQUERIDO
-				) 
-				values (
-					'$NameR'
-					,'$NameI'
-					,'$Requerido'
-			)"
-		) or die("Não é possível inserir a receita!");
-		print("<span>$NameR</span> inserido com sucesso<br> <a href='..\Form\FormReceita.php'>Voltar</a></div>");
+		$Receita->CreateReceita($Receita);
+		print("<span>".$Receita->getNameR()."</span> inserido com sucesso<br> <a href='..\Form\FormReceita.php'>Voltar</a></div>");
 	}
 	?>
 </body>
