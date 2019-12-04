@@ -1,6 +1,7 @@
 <?php 
 require("../conecta.inc.php");
 $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
+include '..\Model\ClassReceita.php'
 ?>
 
 <html>
