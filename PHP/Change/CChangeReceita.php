@@ -20,12 +20,15 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
     <?php
     $Nome_alter    = $_POST['NomeR'];
     $Nome_Old    = $_POST['NomeOld'];
+    $porcao_alter    = $_POST['porcao'];
 
     print("<div class='insert'>Alteração de ingrediente realizada:<p>");
     mysqli_query(
       $ok,
       "update receita 
-          set NOME    = '$Nome_alter'
+          set 
+            NOME    = '$Nome_alter'
+            ,porcao    = '$porcao_alter'
           where NOME = '$Nome_Old'
         "
     ) or die("Não é possível alterar dados do ingrediente!");

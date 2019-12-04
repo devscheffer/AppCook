@@ -38,11 +38,13 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
             ingrediente.nome as nome
             ,sum(receita.requerido)
             ,ingrediente.reserva
-            ,(-1)*(ingrediente.reserva - sum(receita.requerido)) as sl
+            ,ratio*(-1)*(ingrediente.reserva - sum(receita.requerido)) as sl
             ,ingrediente.UNIT as unit
           from receita
           join ingrediente
-          on receita.ID_INGREDIENTE = ingrediente.ID_INGREDIENTE 
+          on receita.ID_INGREDIENTE = ingrediente.ID_INGREDIENTE
+          join shopping_list
+          on shopping_list.NOME = receita.NOME
           where 
           receita.NOME in (SELECT nome from shopping_list)
           GROUP by ingrediente.nome

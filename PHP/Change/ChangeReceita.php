@@ -24,7 +24,9 @@ $Nome1 = $_GET['Nome'];
         <?php
         $result = mysqli_query(
           $ok,
-          "Select distinct nome 
+          "Select distinct 
+            nome
+            ,porcao 
             from receita
             where nome ='$Nome1'
           "
@@ -32,6 +34,7 @@ $Nome1 = $_GET['Nome'];
 
         $linha   = mysqli_fetch_array($result);
         $Nome2    = $linha["nome"];
+        $porcao    = $linha["porcao"];
 
 
         print("<h3>Receita <br><span>$Nome2</span> </h3><p>");
@@ -46,6 +49,12 @@ $Nome1 = $_GET['Nome'];
           <input type="text" name="NomeR" value="<?php print($Nome2) ?>" id="NomeR ">
           <input type="hidden" name="NomeOld" value="<?php print($Nome2) ?>" id="NomeOld ">
           <br>
+
+          <label for="porcao">Porcao:</label>
+          <?php print("<br><span>$porcao</span> ") ?>
+          <input type="numeric" name="porcao" value="<?php print($porcao) ?>" id="porcao ">
+          <br>
+
 
           <input type="submit" value="Alterar Dados" class="save">
         </form>

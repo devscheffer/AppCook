@@ -41,6 +41,10 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
         </datalist>
         <br>
 
+        <label for="Ratio">Ratio: </label>
+        <input type="numeric" id="Ratio" name="Ratio">
+        <br>
+
         <input type="submit" value="Salvar" class="save">
       </form>
     </fieldset>
@@ -48,8 +52,10 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
     <?php
       if(isset($_POST)){
         $NameR     = $_POST['NameR'];
+        $Ratio     = $_POST['Ratio'];
     if (
       $NameR == ""
+      or $Ratio == ""
     )
       print("Faltou preencher algum campo...");
     else {		
@@ -57,10 +63,12 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
         $ok,
         "insert into 
           shopping_list (
-            NOME 
+            NOME
+            ,RATIO 
           ) 
           values (
             '$NameR'
+            ,'$Ratio'
         )"
       ) or die("Não é possível inserir a receita!");
     }
@@ -73,6 +81,7 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
         </tr>
         <tr>
           <th>Receita</th>
+          <th>Ratio</th>
           <th>Deletar</th>
         </tr>
       </thead>
@@ -84,14 +93,18 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
           "select 
             id_shopping_list
             ,nome
+            ,ratio
           from shopping_list
           "
         );
         while ($linha = mysqli_fetch_array($result)) {
           $NomeR = $linha["nome"];
+          $RatioR = $linha["ratio"];
           $Id = $linha["id_shopping_list"];
           print("
           <td>$NomeR</td>");
+          print("
+          <td>$RatioR</td>");
           print("<td><a href='../Delete/DeleteShoppingList.php?id=$Id'>Deletar</a></td></tr>");
         }
       }

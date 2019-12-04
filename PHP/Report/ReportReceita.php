@@ -24,6 +24,7 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
         </tr>
         <tr>
           <th>Nome</th>
+          <th>Porcao</th>
           <th>Alterar</th>
           <th>Deletar</th>
         </tr>
@@ -32,16 +33,24 @@ $ok = conecta_bd() or die("Não é possível conectar-se ao servidor.");
         <?php
         $result = mysqli_query(
           $ok,
-          "select NOME
+          "select 
+            NOME
+            ,porcao
           from receita
-          group by NOME
+          group by 
+            NOME
+            ,porcao
           "
         );
         while ($linha = mysqli_fetch_array($result)) {
           $Nome = $linha["NOME"];
+          $Porcao = $linha["porcao"];
+
 
           print("<tr>
           <td>$Nome</td>");
+          print("
+          <td>$Porcao</td>");
           print("<td><a href='../Change/ChangeReceita.php?Nome=$Nome'>Alterar</a></td>");
           print("<td><a href='../Delete/DeleteReceita.php?Nome=$Nome'>Deletar</a></td></tr>");
         }
